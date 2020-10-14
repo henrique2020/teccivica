@@ -6,7 +6,6 @@ import json
 def escrever_json(dados):
     with open('arquivo_json', 'w', encoding='utf8') as f:
         json.dump(dados, f)
-
 info_candidatos = []
 
 r = requests.get("https://www.diariocidade.com/rs/feliz/eleicoes/2020/candidatos/prefeito/")
@@ -21,14 +20,14 @@ while x < len(candidatos):
     link = artigo.find("a")
     apenas_link = link.get('href').split()
     apenas_link = apenas_link[0]
-    print(apenas_link)
+    #print(apenas_link)
     array.append(apenas_link)
 
     #Imagem:
     imagem = link.find(class_="thumb")
     img = imagem.find("img")
     link_imagem = img.get('data-src')
-    print(link_imagem)
+    #print(link_imagem)
     array.append(link_imagem)
 
     #Nome e partido:
@@ -41,21 +40,15 @@ while x < len(candidatos):
     while y < len(nome):
         nome_completo = nome_completo+nome[y-1]+" "
         y+=1
-    print(nome_completo)
+    #print(nome_completo)
     array.append(nome_completo)
 
     partido = name.find_all('p')[0].get_text()
-    print (partido)
+    #print (partido)
     array.append(partido)
     
     x =  x+2
     info_candidatos.append(array)
-    print(array)
-
-
-print()
-print('\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-')
-print()
 
 r = requests.get("https://www.diariocidade.com/rs/feliz/eleicoes/2020/candidatos/vice-prefeito/")
 html = BeautifulSoup(r.content, "html.parser")
@@ -69,14 +62,14 @@ while x < len(candidatos):
     link = artigo.find("a")
     apenas_link = link.get('href').split()
     apenas_link = apenas_link[0]
-    print(apenas_link)
+    #print(apenas_link)
     array.append(apenas_link)
 
     #Imagem:
     imagem = link.find(class_="thumb")
     img = imagem.find("img")
     link_imagem = img.get('data-src')
-    print(link_imagem)
+    #print(link_imagem)
     array.append(link_imagem)
 
     #Nome e partido:
@@ -89,16 +82,15 @@ while x < len(candidatos):
     while y < len(nome):
         nome_completo = nome_completo+nome[y-1]+" "
         y+=1
-    print(nome_completo)
+    #print(nome_completo)
     array.append(nome_completo)
 
     partido = name.find_all('p')[0].get_text()
-    print (partido)
+    #print (partido)
     array.append(partido)
     
     x =  x+2
     info_candidatos.append(array)
-    print()
 
 print(info_candidatos)
 escrever_json(info_candidatos)
