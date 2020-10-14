@@ -1,23 +1,35 @@
 import requests
 from bs4 import BeautifulSoup
 
+import json
+
+def escrever_json(dados):
+    with open('arquivo_json', 'w', encoding='utf8') as f:
+        json.dump(dados, f)
+
+info_candidatos = []
+
 r = requests.get("https://www.diariocidade.com/rs/feliz/eleicoes/2020/candidatos/prefeito/")
 html = BeautifulSoup(r.content, "html.parser")
 container = html.find(class_="lista-candidatos")
 candidatos = container.find(class_="group-items container first-group")
 x = 1
 while x < len(candidatos):
+    array = []
     artigo = candidatos.contents[x]
     #Link:
     link = artigo.find("a")
     apenas_link = link.get('href').split()
     apenas_link = apenas_link[0]
     print(apenas_link)
+    array.append(apenas_link)
 
     #Imagem:
     imagem = link.find(class_="thumb")
     img = imagem.find("img")
-    print(img.get('data-src'))
+    link_imagem = img.get('data-src')
+    print(link_imagem)
+    array.append(link_imagem)
 
     #Nome e partido:
     name = link.find(class_="content")
@@ -25,16 +37,21 @@ while x < len(candidatos):
     nome = nome.split()
     #del nome[-1]
     y = 1
-    n = ''
+    nome_completo = ''
     while y < len(nome):
-        n = n+nome[y-1]+" "
+        nome_completo = nome_completo+nome[y-1]+" "
         y+=1
-    print(n)
+    print(nome_completo)
+    array.append(nome_completo)
+
     partido = name.find_all('p')[0].get_text()
     print (partido)
+    array.append(partido)
     
     x =  x+2
-    print()
+    info_candidatos.append(array)
+    print(array)
+
 
 print()
 print('\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-')
@@ -46,17 +63,21 @@ container = html.find(class_="lista-candidatos")
 candidatos = container.find(class_="group-items container first-group")
 x = 1
 while x < len(candidatos):
+    array = []
     artigo = candidatos.contents[x]
     #Link:
     link = artigo.find("a")
     apenas_link = link.get('href').split()
     apenas_link = apenas_link[0]
     print(apenas_link)
+    array.append(apenas_link)
 
     #Imagem:
     imagem = link.find(class_="thumb")
     img = imagem.find("img")
-    print(img.get('data-src'))
+    link_imagem = img.get('data-src')
+    print(link_imagem)
+    array.append(link_imagem)
 
     #Nome e partido:
     name = link.find(class_="content")
@@ -64,13 +85,20 @@ while x < len(candidatos):
     nome = nome.split()
     #del nome[-1]
     y = 1
-    n = ''
+    nome_completo = ''
     while y < len(nome):
-        n = n+nome[y-1]+" "
+        nome_completo = nome_completo+nome[y-1]+" "
         y+=1
-    print(n)
+    print(nome_completo)
+    array.append(nome_completo)
+
     partido = name.find_all('p')[0].get_text()
     print (partido)
+    array.append(partido)
     
     x =  x+2
+    info_candidatos.append(array)
     print()
+
+print(info_candidatos)
+escrever_json(info_candidatos)
