@@ -1,7 +1,6 @@
 <?php
   $comando = escapeshellcmd('webscraping.py');
   $cmdResult = shell_exec($comando);
-  echo $cmdResult;
 
   $arquivo = file_get_contents('arquivo.json');
   $json = json_decode($arquivo);
