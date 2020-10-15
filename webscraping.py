@@ -1,10 +1,11 @@
+#!/usr/bin/env python
 import requests
 from bs4 import BeautifulSoup
 
 import json
 
 def escrever_json(dados):
-    with open('arquivo_json', 'w', encoding='utf8') as f:
+    with open('arquivo.json', 'w', encoding='utf8') as f:
         json.dump(dados, f)
 info_candidatos = []
 
@@ -42,6 +43,7 @@ while x < len(candidatos):
         y+=1
     #print(nome_completo)
     array.append(nome_completo)
+    array.append(nome[-1])
 
     partido = name.find_all('p')[0].get_text()
     #print (partido)
@@ -84,6 +86,7 @@ while x < len(candidatos):
         y+=1
     #print(nome_completo)
     array.append(nome_completo)
+    array.append(nome[-1])
 
     partido = name.find_all('p')[0].get_text()
     #print (partido)
@@ -92,5 +95,5 @@ while x < len(candidatos):
     x =  x+2
     info_candidatos.append(array)
 
-print(info_candidatos)
+#print(info_candidatos)
 escrever_json(info_candidatos)
